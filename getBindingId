@@ -1,0 +1,17 @@
+split method on the existing code that we have to obtain the bindingId like this:
+var bindingId = catalogItem.getProviderBinding().getBindingId().split("!")[2]; 
+What the code above is doing, is telling JavaScript to take the “String” result from the getBindingId() method, and split the string on “!”. Then, return element index 2 (the 3rd element when counting from 0) and assign it to bindinId.
+With the change made to our existing code, the current state of the “Get Catalog Item” scriptable item script is:
+var catalogItemList = null;
+
+catalogItemList = vCACCAFEEntitiesFinder.findCatalogItems(attvCACCafeHost);
+
+if (catalogItemList != null && catalogItemList.length > 0){
+    System.log("Number of catalog items found in vRA: " + catalogItemList.length)
+    for each(var catalogItem in catalogItemList){
+        System.log("Catalog Item Name: " + catalogItem.name);
+        var bindingId = catalogItem.getProviderBinding().getBindingId().split("!")[2];
+        System.log("We are looking for a blueprint with an ID of: " + bindingId);
+    }
+} else throw "No catalog items found in vRA";
+
